@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'; 
+import React, { useState } from 'react'; 
 import { Route, Link } from 'react-router-dom';
 
 import {
-    UserForm,
+    Login,
     Posts,
     Home, 
     NewPost
@@ -13,28 +13,33 @@ import {
 const App = () => { 
     const [token, setToken] = useState('');
     const [users, setUsers] = useState('');
-    
-    // const [guestUsr, setGuestUsr] = useState('');
-    console.log('token: ', token);
+    // console.log('token: ', token);
+    console.log('user:', users);
+
+
     return <> 
         <h1> Stranger's Things </h1>
-        <Link to = '/posts'> Post |, </Link>
-        <Link to = '/newpost'>NewPost |, </Link>
-        <Link to = '/user/login'> Login |, </Link>
-        <Link to ='/user/register'> Register |, </Link>
+        <Link to = '/posts'> Post </Link> |
+        {
+            token ? <button className ='logout' onClick = {() => setToken('')}>Logout</button> : <Link to ='/users/login'>Login | </Link> 
+        }
+        <Link to = '/newpost'> NewPost </Link> | 
+        {/* <Link to = '/user/login'> Login </Link> | */}
+        {/* <Link to ='/user/register'> Register </Link> | */}
+        <Link to ='/Home'> Home </Link>'
 
     <div> 
         <Route exact path="/"> 
             <Home />
         </Route>
         <Route exact path="/posts">
-            <Posts/> 
+            <Posts token = {token} /> 
         </Route>
         <Route path="/newpost"> 
             <NewPost token = {token} setUsers ={setUsers}/> 
         </Route>
-        <Route exact path="/user/:method">
-            <UserForm setToken={setToken} setUsers ={setUsers} />
+        <Route exact path="/users/:method">
+            <Login setToken = {setToken} setUsers = {setUsers} />
         </Route>
     </div>
   </> 

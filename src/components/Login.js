@@ -4,14 +4,14 @@ import { useParams, useHistory } from 'react-router';
 const { REACT_APP_BASE_URL } = process.env;
 
 
-const UserForm = ({setToken, setUsers}) => { 
+const Login = ({setToken, setUsers}) => { 
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     
     const params = useParams();
     const history = useHistory();
-    console.log(params.method);
+    // console.log(params.method);
 
 return <> 
     <h1> Login/Register </h1>
@@ -33,9 +33,13 @@ return <>
         }
       })
     });
+
     const dataObj = await resp.json();
     console.log('dataObj: ', dataObj);
-    
+    // setToken(dataObj.data.token);
+    // setUsers(dataObj.data.users);    
+    // // console.log('setUsers: ', setUsers(dataObj));
+
 
     if(dataObj.data) { 
         setToken(dataObj.data.token);
@@ -51,7 +55,6 @@ return <>
         <button type="submit">Submit</button>
     </form>
     </>
-
 }
 
-export default UserForm; 
+export default Login; 

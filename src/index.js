@@ -4,8 +4,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 
 const { REACT_APP_BASE_URL } = process.env;
-const APIURL = REACT_APP_BASE_URL;
-console.log('APIURL: ', APIURL)
+// const APIURL = REACT_APP_BASE_URL;
+// console.log('APIURL: ', APIURL)
 
 
 
