@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { callApi } from '../util';
 
-const { REACT_APP_BASE_URL } = process.env;
-const APIURL = REACT_APP_BASE_URL;
+// const { REACT_APP_BASE_URL } = process.env;
+// const APIURL = REACT_APP_BASE_URL;
 
 const NewPost = ({token}) => { 
     const [title, setTitle] = useState ('')
@@ -12,30 +13,50 @@ const NewPost = ({token}) => {
 
     return <> 
         <h1> Create a post </h1>
-
+        
         <form onSubmit={async (event) => {
             event.preventDefault(); 
-
-            fetch(`${APIURL}/posts`, {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify({
-                    post: {
-                    title,
-                    description,
-                    price,
-                    willDeliver
+            try { 
+                const resp = await callApi({
+                    method: 'POST',
+                    url: '/posts',
+                    token,
+                    body: {
+                        post: {
+                            title,
+                            description,
+                            price,
+                            willDeliver
+                        }
                     }
-                })
-                }).then(response => response.json())
-                .then(result => {
-                    console.log(result);
-                })
-                .catch(console.error);
-            }}> 
+                }) 
+                return resp;
+            }
+            catch (err){
+                console.error
+            }
+
+            // fetch(`${APIURL}/posts`, {
+            //     method: "POST",
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         'Authorization': `Bearer ${token}`
+            //     },
+            //     body: JSON.stringify({
+            //         post: {
+            //         title,
+            //         description,
+            //         price,
+            //         willDeliver
+            //         }
+            //     })
+            //     }).then(response => response.json())
+            //     .then(result => {
+            //         console.log(result);
+            //     })
+            //     .catch(console.error);
+            // }
+         }}> 
 
             <fieldset> 
                 <label> Title </label>

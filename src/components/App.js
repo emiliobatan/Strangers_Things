@@ -13,8 +13,6 @@ import {
 const App = () => { 
     const [token, setToken] = useState('');
     const [users, setUsers] = useState('');
-    // console.log('token: ', token);
-    console.log('user:', users);
 
 
     return <> 
@@ -26,11 +24,11 @@ const App = () => {
         <Link to = '/newpost'> NewPost </Link> | 
         {/* <Link to = '/user/login'> Login </Link> | */}
         {/* <Link to ='/user/register'> Register </Link> | */}
-        <Link to ='/Home'> Home </Link>'
+        <Link to ='/Home'> Home </Link>
 
     <div> 
         <Route exact path="/"> 
-            <Home />
+            <Home users={users}/>
         </Route>
         <Route exact path="/posts">
             <Posts token = {token} /> 
@@ -38,8 +36,11 @@ const App = () => {
         <Route path="/newpost"> 
             <NewPost token = {token} setUsers ={setUsers}/> 
         </Route>
-        <Route exact path="/users/:method">
-            <Login setToken = {setToken} setUsers = {setUsers} />
+        <Route exact path="/users/login">
+            <Login setToken = {setToken} setUsers = {setUsers} token ={token}/>
+        </Route>
+        <Route exact path="/users/register">
+            <Login setToken = {setToken} setUsers = {setUsers} token ={token}/>
         </Route>
     </div>
   </> 

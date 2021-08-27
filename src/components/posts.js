@@ -6,7 +6,7 @@ const APIURL = REACT_APP_BASE_URL;
 
 const Posts = () => { 
     const [posts, setPosts] = useState([]);
-    // console.log('posts', posts);
+    console.log('posts', posts);
 
 
     useEffect(() => {

@@ -1,19 +1,20 @@
 import React, { useState } from 'react'
 import { useParams, useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 
 const { REACT_APP_BASE_URL } = process.env;
 
 
-const Login = ({setToken, setUsers}) => { 
+const Login = ({setToken, setUsers, token}) => { 
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     
     const params = useParams();
     const history = useHistory();
-    // console.log(params.method);
 
-return <> 
+
+return <>
     <h1> Login/Register </h1>
     <div> This is the {params.method} method. </div> 
     <form onSubmit={async (event) => { 
@@ -33,27 +34,50 @@ return <>
         }
       })
     });
-
+ 
     const dataObj = await resp.json();
     console.log('dataObj: ', dataObj);
-    // setToken(dataObj.data.token);
-    // setUsers(dataObj.data.users);    
-    // // console.log('setUsers: ', setUsers(dataObj));
 
 
     if(dataObj.data) { 
+        console.log('data.obj.exists:', dataObj.data)
+
         setToken(dataObj.data.token);
-        setUsers(dataObj.data.user);
+        
+        const usrResp = await fetch(`${REACT_APP_BASE_URL}/users/me`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${dataObj.data.token}`
+            }
+        })
+        const usrRespObj = await usrResp.json();
+
+        console.log('usrRespObj:', usrRespObj);
+        setUsers(usrRespObj.data);
+
+
         if(dataObj.data.token) { 
             history.push('/');
         }
+
     }
 
     }}>
         <input type='text' placeholder ='username' value={username} onChange={(event) => setUsername(event.target.value)}></input> 
+        <br/>
+        <br/> 
         <input type='password' placeholder ='password' value={password} onChange={(event) => setPassword(event.target.value)}></input>
-        <button type="submit">Submit</button>
+        <br/>
+        {
+            params.method === 'register' ? <input type='password' placeholder='password' value={password} onChange={(event) => setPassword(event.target.value)}></input>
+            :''
+        }
+        {
+            !password.value === password.value ? <button disabled={!password || !username || password.length < 7 || password !== verPass} >Submit</button> : <button type='submit'>Submit</button> 
+        }
+    
     </form>
+    {params.method === 'login' ? <Link to = '/user/register'> Click here to register</Link> : <Link to = '/user/login'> Click here to login </Link>}
     </>
 }
 
