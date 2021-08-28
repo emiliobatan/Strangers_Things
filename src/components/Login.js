@@ -2,14 +2,15 @@ import React, { useState } from 'react'
 import { useParams, useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 
+import { callApi } from '../util';
+
 const { REACT_APP_BASE_URL } = process.env;
 
 
-const Login = ({setToken, setUsers, token}) => { 
+const Login = ({setToken, setUser, token}) => { 
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    
     const params = useParams();
     const history = useHistory();
 
@@ -19,31 +20,40 @@ return <>
     <div> This is the {params.method} method. </div> 
     <form onSubmit={async (event) => { 
         event.preventDefault();
-        const fetchURL = `${REACT_APP_BASE_URL}/users/${params.method}`
-        console.log('fetchURL: ', fetchURL);
-
-        const resp = await fetch(`${REACT_APP_BASE_URL}/users/${params.method}`, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                user: {
-                username,
+    
+    const dataObj = await callApi({
+        url: `/users/${params.method}`, 
+        method: 'POST',
+        body: { 
+            user: { 
+                username, 
                 password
+            }
         }
-      })
     });
+    //     const fetchURL = `${REACT_APP_BASE_URL}/users/${params.method}`
+    //     console.log('fetchURL: ', fetchURL);
+
+    //     const resp = await fetch(`${REACT_APP_BASE_URL}/users/${params.method}`, {
+    //         method: "POST",
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify({
+    //             user: {
+    //             username,
+    //             password
+    //     }
+    //   })
+    // });
  
-    const dataObj = await resp.json();
-    console.log('dataObj: ', dataObj);
+    // const dataObj = await resp.json();
+    // console.log('dataObj: ', dataObj);
 
 
     if(dataObj.data) { 
         console.log('data.obj.exists:', dataObj.data)
-
         setToken(dataObj.data.token);
-        
         const usrResp = await fetch(`${REACT_APP_BASE_URL}/users/me`, {
             headers: {
                 'Content-Type': 'application/json',
@@ -51,15 +61,11 @@ return <>
             }
         })
         const usrRespObj = await usrResp.json();
-
         console.log('usrRespObj:', usrRespObj);
-        setUsers(usrRespObj.data);
-
-
+        setUser(usrRespObj.data);
         if(dataObj.data.token) { 
             history.push('/');
         }
-
     }
 
     }}>

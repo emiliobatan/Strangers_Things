@@ -1,12 +1,12 @@
 import React from 'react';
 
-const Home = ({users}) => {
+const Home = ({user}) => {
 
     return <>
         <h1> Welcome to Stanger's Things! </h1>
         {
-            users ? <div> 
-            Logged in as {users.username}
+            user ? <div> 
+            Logged in as {user.username}
             </div> : ''
         }
     </>

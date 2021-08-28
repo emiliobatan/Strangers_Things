@@ -12,14 +12,14 @@ import {
 
 const App = () => { 
     const [token, setToken] = useState('');
-    const [users, setUsers] = useState('');
+    const [user, setUser] = useState('');
 
 
     return <> 
         <h1> Stranger's Things </h1>
         <Link to = '/posts'> Post </Link> |
         {
-            token ? <button className ='logout' onClick = {() => setToken('')}>Logout</button> : <Link to ='/users/login'>Login | </Link> 
+            token ? <button className ='logout' onClick = {() => setToken('')}>Logout</button> : <Link to ='/user/login'>Login | </Link> 
         }
         <Link to = '/newpost'> NewPost </Link> | 
         {/* <Link to = '/user/login'> Login </Link> | */}
@@ -28,20 +28,18 @@ const App = () => {
 
     <div> 
         <Route exact path="/"> 
-            <Home users={users}/>
+            <Home user={user}/>
         </Route>
         <Route exact path="/posts">
             <Posts token = {token} /> 
         </Route>
         <Route path="/newpost"> 
-            <NewPost token = {token} setUsers ={setUsers}/> 
+            <NewPost token = {token} setUser ={setUser}/> 
         </Route>
-        <Route exact path="/users/login">
-            <Login setToken = {setToken} setUsers = {setUsers} token ={token}/>
+        <Route exact path="/user/:method">
+            <Login setToken = {setToken} setUser = {setUser} token ={token}/>
         </Route>
-        <Route exact path="/users/register">
-            <Login setToken = {setToken} setUsers = {setUsers} token ={token}/>
-        </Route>
+
     </div>
   </> 
 }
