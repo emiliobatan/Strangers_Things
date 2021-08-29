@@ -7,7 +7,7 @@ const MessageForm = ({post, token}) => {
   const history = useHistory();
   const handleSubmit = async (ev) => {
     ev.preventDefault();
-    const url = `/post/${post._id}/messages`;
+    const url = `/posts/${post._id}/messages`;
     const data = await callApi({
       method: 'POST',
       url,
@@ -21,11 +21,13 @@ const MessageForm = ({post, token}) => {
     history.push('./')
   }
   return <>
-    {token && !post.isAuthor ? 
+    {
+    token && !post.isAuthor ? 
     <form onSubmit={handleSubmit}>
       <input value={content} placeholder="content" onChange={(ev) => setContent(ev.target.value)}></input>
       <button type="submit">Add Comment to Post</button>
-    </form> : ''}
+    </form> : ''
+    }
   </>
 }
 

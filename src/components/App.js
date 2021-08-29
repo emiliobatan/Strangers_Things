@@ -6,7 +6,8 @@ import {
     Posts,
     Home, 
     NewPost,
-    PostView
+    PostView,
+    Profile
   } from './index';
 
 import { callApi } from '../util';
@@ -41,13 +42,16 @@ const App = () => {
         <h1> Stranger's Things </h1>
         <Link to = '/posts'> Post </Link> |
         {
+            token ? <Link to = '/profile'> Profile </Link> : ''
+        }
+        {
             token ? <button className ='logout' onClick = {() => setToken('')}>Logout</button> : <Link to ='/user/login'>Login | </Link> 
         }
         <Link to ='/Home'> Home </Link>
         
     <div> 
         <Route exact path="/"> 
-            <Home user={user} token ={token} userId = {userId} messages ={messages} />
+            <Home user={user} token ={token} userId = {userId} messages ={messages}/>
         </Route>
         <Route exact path="/posts">
             {token ? <NewPost token = {token} setPosts={setPosts}/>: null} 
@@ -57,7 +61,10 @@ const App = () => {
             <Login setToken = {setToken} setUser = {setUser} setUserId = {setUserId} setMessages = {setMessages}/>
         </Route>
         <Route exact path='/posts/:postId'>
-            <PostView posts ={posts} token = {token} user={user}> </PostView>
+            <PostView posts = {posts} token = {token} user={user}> </PostView>
+        </Route>
+        <Route exact path ='/profile'> 
+            <Profile token = {token} setPosts = {setPosts} setMessages = {setMessages} posts = {posts} messages = {messages} userId ={userId} />
         </Route>
     </div>
   </> 

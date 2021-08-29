@@ -34,30 +34,6 @@ const NewPost = ({token, setPosts}) => {
     return <> 
         <h1> Create a post </h1>
         <form onSubmit = {handleAdd}> 
-
-        {/* <form onSubmit={async (event) => {
-            event.preventDefault(); 
-            try { 
-                const resp = await callApi({
-                    method: 'POST',
-                    url: '/posts',
-                    token,
-                    body: {
-                        post: {
-                            title,
-                            description,
-                            price,
-                            willDeliver
-                        }
-                    }
-                }) 
-                return resp;
-            }
-            catch (err){
-                console.error
-            }
-         }}>  */}
-
             <fieldset> 
                 <label> Title </label>
                 <input type="text" placeholder="Enter Title" value={title} onChange={(event) => setTitle(event.target.value)}></input>

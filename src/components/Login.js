@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { useParams, useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
-
 import { callApi } from '../util';
-
+const {REACT_APP_BASE_URL} = process.env
 
 const Login = ({setToken, setUser, setMessages, setUserId }) => { 
 
