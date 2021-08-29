@@ -4,10 +4,8 @@ import { Link } from 'react-router-dom';
 
 import { callApi } from '../util';
 
-const { REACT_APP_BASE_URL } = process.env;
 
-
-const Login = ({setToken, setUser, token}) => { 
+const Login = ({setToken, setUser, setMessages, setUserId }) => { 
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -21,7 +19,7 @@ return <>
     <form onSubmit={async (event) => { 
         event.preventDefault();
     
-    const dataObj = await callApi({
+    const loginResp = await callApi({
         url: `/users/${params.method}`, 
         method: 'POST',
         body: { 
@@ -31,39 +29,15 @@ return <>
             }
         }
     });
-    //     const fetchURL = `${REACT_APP_BASE_URL}/users/${params.method}`
-    //     console.log('fetchURL: ', fetchURL);
+    console.log('loginResp:', loginResp);
 
-    //     const resp = await fetch(`${REACT_APP_BASE_URL}/users/${params.method}`, {
-    //         method: "POST",
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify({
-    //             user: {
-    //             username,
-    //             password
-    //     }
-    //   })
-    // });
- 
-    // const dataObj = await resp.json();
-    // console.log('dataObj: ', dataObj);
-
-
-    if(dataObj.data) { 
-        console.log('data.obj.exists:', dataObj.data)
-        setToken(dataObj.data.token);
-        const usrResp = await fetch(`${REACT_APP_BASE_URL}/users/me`, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${dataObj.data.token}`
-            }
-        })
-        const usrRespObj = await usrResp.json();
-        console.log('usrRespObj:', usrRespObj);
-        setUser(usrRespObj.data);
-        if(dataObj.data.token) { 
+    if(loginResp.data) { 
+        const userResp = await callApi({ url: '/users/me', token: loginResp.data.token})
+        setToken(loginResp.data.token);
+        setUser(userResp.data.username);
+        setUserId(userResp.data._id);
+        setMessages(userResp.data.messages);
+        if(loginResp.data.token) { 
             history.push('/');
         }
     }

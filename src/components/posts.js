@@ -1,37 +1,38 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { callApi } from '../util';
-
-const { REACT_APP_BASE_URL } = process.env;
-const APIURL = REACT_APP_BASE_URL;
-// console.log('APIURL: ', APIURL)
-
-const Posts = () => { 
-    const [posts, setPosts] = useState([]);
-    console.log('posts', posts);
+import { Link } from 'react-router-dom';
 
 
-    useEffect(() => {
-        const fetchPosts = async () => { 
-            const resp = await fetch(`${APIURL}/posts`)
-            const stuff = await resp.json();
-            setPosts(stuff.data.posts);
-        }
-        fetchPosts();
-    }, [])
+// const { REACT_APP_BASE_URL } = process.env;
 
-    return (
-    <>
-        {
-            posts.map(post => <div key={post._id}> 
-               <h3> {post.title} </h3> 
-               <div> {post.description} </div>
-               <div> Price: {post.price} </div>
-               <div> Seller: {post.seller} </div>
-               <div> Location: {post.location} </div>
-            </div>)
-        }
+import {
+    PostSingle,
+  } from './';
+  
+  const Posts = ({posts, token, fetchPosts}) => {
+  
+    const handleDelete = async (postId) => {
+      const respObj = await callApi({
+        method: 'DELETE',
+        url: `/Posts/${postId}`,
+        token
+      });
+      console.log('respObj: ', respObj);
+      await fetchPosts();
+    }
+   
+    
+    return <>
+      {
+        posts.map(post => <PostSingle key={post._id} post={post} token={token}>
+          {/* props.children */}
+          <Link to={`/posts/${post._id}`}>View Post</Link>
+          {
+            post.isAuthor && <button onClick={() => handleDelete(post._id)}>Delete</button>
+          }
+        </PostSingle>)
+      }
     </>
-    )
-}
+  }
 
 export default Posts;

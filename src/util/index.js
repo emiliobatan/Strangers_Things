@@ -11,7 +11,6 @@ export const callApi = async ({url, method, token, body}) => {
     };
     if(token) options.headers['Authorization'] = `Bearer ${token}`;
 
-    console.log('options: ', options);
     
 
     const response = await fetch(`${REACT_APP_BASE_URL}${url}`, options);
