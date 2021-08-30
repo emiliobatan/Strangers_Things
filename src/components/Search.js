@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 
 function Search({posts, setPosts}) {
-    const [searchItem, setsearchItem] = useState('');
-    const postMatch = (post, text) => {
+    const [searchedItem, setSearchedItem] = useState('');
+    const postMatches = (post, text) => {
         let check = post.includes(text);
         return check;
     }
     const handleSubmit = () => {
-        const filteredPosts = posts.filter(post => postMatch(post.title.toLowerCase(), searchItem));
+        const filteredPosts = posts.filter(post => postMatches(post.title.toLowerCase(), searchedItem));
         setPosts(filteredPosts);
-        if (!searchItem.length) {
+        if (!searchedItem.length) {
             fetchPosts();
         }
     }
@@ -25,7 +25,7 @@ return <>
     ev.preventDefault()
     handleSubmit()
 }}>
-    <input type="text" placeholder="search..." value={searchItem} onChange={(event) => setsearchItem(event.target.value)}></input>
+    <input type="text" placeholder="search..." value={searchedItem} onChange={(event) => setSearchedItem(event.target.value)}></input>
     <button type="submit">Search</button>
 </form>
 </>

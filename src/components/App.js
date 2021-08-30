@@ -39,15 +39,15 @@ const App = () => {
     }, [token]);
 
     return <> 
-        <h1 className = 'Header'> Stranger's Things </h1>
-        <Link to = '/posts' className ='link'> Post </Link> 
+        <h1> Stranger's Things </h1>
+        <Link to = '/posts' className ='link'> Post </Link> |
         {
-            token ? <Link to = '/profile' className = 'link'> Profile </Link> : ''
+            token ? <Link to = '/profile'> Profile </Link> : ''
         }
         {
-            token ? <button className = 'logout' onClick = {() => setToken('')}>Logout</button> : <Link to ='/user/login' className ='link'> Login </Link> 
+            token ? <button className ='logout' onClick = {() => setToken('')}>Logout</button> : <Link to ='/user/login'>Login | </Link> 
         }
-        <Link to ='/Home' className ='link'> Home </Link>
+        <Link to ='/Home'> Home </Link>
         
     <div> 
         <Route exact path="/"> 

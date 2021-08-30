@@ -10,6 +10,7 @@ const Login = ({setToken, setUser, setMessages, setUserId }) => {
     const params = useParams();
     const history = useHistory();
 
+
     return <>
         <h1> Login/Register </h1>
         <div> This is the {params.method} method. </div> 
@@ -26,6 +27,7 @@ const Login = ({setToken, setUser, setMessages, setUserId }) => {
                 }
             }
         });
+        console.log('loginResp:', loginResp);
 
         if(loginResp.data) { 
             const userResp = await callApi({ url: '/users/me', token: loginResp.data.token})

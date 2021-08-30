@@ -10,13 +10,13 @@ const NewPost = ({token, setPosts}) => {
 
     const handleAdd = async (ev) => {
         ev.preventDefault();
-        console.log({location, description})
+        console.log({location, description, price, title, willDeliver})
         const postResp = await callApi({
             url: '/posts',
             method: 'POST',
             token, 
             body: {
-                posts: {
+                post: {
                     title,
                     description,
                     price,
@@ -25,9 +25,7 @@ const NewPost = ({token, setPosts}) => {
                 }
             }
         });
-        console.log('postResp:', postResp);
         const postsResp = await callApi({ url: '/posts', token});
-        console.log('postsResp:', postsResp)
         setPosts(postsResp.data.posts);
     }
 
