@@ -1,12 +1,19 @@
 * { 
-    background-color: blanchedalmond;
+    background-color: #FFFFFF;
 }
 
-.link { 
+.link {
     color: black;
+    background-color: #C8553D;
+    border-width: 10rem;
 }
 
 button { 
     color: black;
-    background-color: skyblue;
+    background-color: #C8553D
+}
+
+.header { 
+    display: flex;
+    justify-content: right;
 }

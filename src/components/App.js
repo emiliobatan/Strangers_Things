@@ -13,7 +13,6 @@ import {
 
 import { callApi } from '../util';
 
-// const { REACT_APP_BASE_URL } = process.env;
 
 const App = () => { 
     const [token, setToken] = useState('');
@@ -40,15 +39,15 @@ const App = () => {
     }, [token]);
 
     return <> 
-        <h1> Stranger's Things </h1>
-        <Link to = '/posts' className ='link'> Post </Link> |
+        <h1 className = 'Header'> Stranger's Things </h1>
+        <Link to = '/posts' className ='link'> Post </Link> 
         {
-            token ? <Link to = '/profile'> Profile </Link> : ''
+            token ? <Link to = '/profile' className = 'link'> Profile </Link> : ''
         }
         {
-            token ? <button className ='logout' onClick = {() => setToken('')}>Logout</button> : <Link to ='/user/login'>Login | </Link> 
+            token ? <button className = 'logout' onClick = {() => setToken('')}>Logout</button> : <Link to ='/user/login' className ='link'> Login </Link> 
         }
-        <Link to ='/Home'> Home </Link>
+        <Link to ='/Home' className ='link'> Home </Link>
         
     <div> 
         <Route exact path="/"> 

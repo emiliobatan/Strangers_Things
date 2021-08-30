@@ -3,9 +3,9 @@ import React from 'react';
 const PostSingle = ({post, children}) => {
   return post 
     ? <div style={{margin: '.2rem'}}>
-      <h5>
+      <h3>
         Title: {post.title}
-      </h5>
+      </h3>
       <div>
         Description: {post.description}
       </div>
