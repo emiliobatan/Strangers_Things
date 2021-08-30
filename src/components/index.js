@@ -7,3 +7,4 @@ export { default as PostSingle } from './PostSingle';
 export { default as PostView } from './PostView';
 export { default as MessageForm } from './MessageForm';
 export { default as Profile } from './Profile';
+export { default as Search } from './Search';

@@ -7,7 +7,8 @@ import {
     Home, 
     NewPost,
     PostView,
-    Profile
+    Profile,
+    Search
   } from './index';
 
 import { callApi } from '../util';
@@ -40,7 +41,7 @@ const App = () => {
 
     return <> 
         <h1> Stranger's Things </h1>
-        <Link to = '/posts'> Post </Link> |
+        <Link to = '/posts' className ='link'> Post </Link> |
         {
             token ? <Link to = '/profile'> Profile </Link> : ''
         }
@@ -54,6 +55,7 @@ const App = () => {
             <Home user={user} token ={token} userId = {userId} messages ={messages}/>
         </Route>
         <Route exact path="/posts">
+            <Search posts={posts} setPosts={setPosts}/>
             {token ? <NewPost token = {token} setPosts={setPosts}/>: null} 
             <Posts posts ={posts} token = {token} fetchPosts = {fetchPosts} setPosts={setPosts}/> 
         </Route>

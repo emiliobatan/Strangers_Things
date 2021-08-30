@@ -26,7 +26,7 @@ import {
       {
         posts.map(post => <PostSingle key={post._id} post={post} token={token}>
           {/* props.children */}
-          <Link to={`/posts/${post._id}`}>View Post</Link>
+          <Link to={`/posts/${post._id}`}>  View Post </Link> |
           {
             post.isAuthor && <button onClick={() => handleDelete(post._id)}>Delete</button>
           }
